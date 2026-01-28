@@ -740,11 +740,14 @@ body {
         transform: translateY(-150%);
         opacity: 0;
         transition: var(--transition);
+        pointer-events: none;
+        z-index: 999;
     }
 
     .nav-menu.active {
         transform: translateY(0);
         opacity: 1;
+        pointer-events: auto;
     }
 
     .nav-link {
@@ -753,14 +756,16 @@ body {
         text-align: center;
     }
 
-    .theme-label-dark,
-    .theme-label-light {
-        display: none;
-    }
-
     .theme-toggle {
         padding: 8px;
         border-radius: 50%;
+        z-index: 1001;
+        position: relative;
+    }
+
+    .theme-label-dark,
+    .theme-label-light {
+        display: none !important;
     }
 
     .hero-name {
