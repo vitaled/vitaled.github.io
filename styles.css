@@ -25,6 +25,27 @@
     --border-radius-sm: 8px;
 }
 
+/* Dark Mode Variables */
+[data-theme="dark"] {
+    --primary-color: #4ade80;
+    --primary-light: #22c55e;
+    --primary-dark: #86efac;
+    --primary-bg: #1a2e1a;
+    
+    --text-primary: #f3f4f6;
+    --text-secondary: #d1d5db;
+    --text-light: #9ca3af;
+    
+    --bg-white: #111827;
+    --bg-light: #1f2937;
+    --bg-section: #1f2937;
+    
+    --border-color: #374151;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -90,6 +111,10 @@ body {
     transition: var(--transition);
 }
 
+[data-theme="dark"] .navbar {
+    background: rgba(17, 24, 39, 0.95);
+}
+
 .navbar.scrolled {
     box-shadow: var(--shadow-md);
 }
@@ -101,6 +126,74 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 16px;
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    background: var(--bg-section);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    padding: 8px 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
+    flex-shrink: 0;
+    color: var(--text-secondary);
+}
+
+.theme-toggle:hover {
+    background: var(--primary-bg);
+    border-color: var(--primary-color);
+    color: var(--primary-dark);
+}
+
+.theme-toggle-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-label-dark,
+.theme-label-light {
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* Light mode: show moon icon and "Dark mode" label */
+.icon-sun {
+    display: none;
+}
+
+.icon-moon {
+    display: block;
+}
+
+.theme-label-dark {
+    display: inline;
+}
+
+.theme-label-light {
+    display: none;
+}
+
+/* Dark mode: show sun icon and "Light mode" label */
+[data-theme="dark"] .icon-sun {
+    display: block;
+}
+
+[data-theme="dark"] .icon-moon {
+    display: none;
+}
+
+[data-theme="dark"] .theme-label-dark {
+    display: none;
+}
+
+[data-theme="dark"] .theme-label-light {
+    display: inline;
 }
 
 .nav-logo {
@@ -658,6 +751,16 @@ body {
         padding: 14px 20px;
         width: 100%;
         text-align: center;
+    }
+
+    .theme-label-dark,
+    .theme-label-light {
+        display: none;
+    }
+
+    .theme-toggle {
+        padding: 8px;
+        border-radius: 50%;
     }
 
     .hero-name {
