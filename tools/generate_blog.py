@@ -181,6 +181,12 @@ def generate_article_html(post, template, all_posts):
     html = html.replace('{{prev_post}}', prev_html)
     html = html.replace('{{next_post}}', next_html)
     
+    # Header image
+    header_image_html = ""
+    if post['image']:
+        header_image_html = f'<div class="article-header-image"><img src="../../blog/images/{post["image"]}" alt="{post["title"]}"></div>'
+    html = html.replace('{{header_image}}', header_image_html)
+    
     return html
 
 

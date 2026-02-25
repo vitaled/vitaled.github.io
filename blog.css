@@ -223,6 +223,23 @@
     color: var(--text-primary);
 }
 
+/* Article Header Image */
+.article-header-image {
+    margin-top: 40px;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.article-header-image img {
+    width: 100%;
+    height: auto;
+    max-height: 500px;
+    object-fit: cover;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-lg);
+}
+
 /* Article Content */
 .article-content {
     padding: 60px 0 100px;

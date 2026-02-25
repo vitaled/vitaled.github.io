@@ -3,6 +3,7 @@ title: "From Autocomplete to Agents: My Journey with GitHub Copilot"
 date: 2026-02-24
 tags: [AI, GitHub Copilot, Development, Agentic AI, Legacy Code]
 excerpt: "Exploring the evolution of GitHub Copilot from an autocomplete tool to an agentic system capable of understanding and modernizing legacy codebases."
+image: copilot-header.png
 ---
 
 # From Autocomplete to Agents: My Journey with GitHub Copilot
