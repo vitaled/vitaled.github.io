@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>From Autocomplete to Agents: My Journey with GitHub Copilot | Daniele Vitale</title>
+    <meta name="description" content="Exploring the evolution of GitHub Copilot from an autocomplete tool to an agentic system capable of understanding and modernizing legacy codebases.">
+    <link rel="icon" type="image/svg+xml" href="../../images/favicon.svg">
+    <link rel="stylesheet" href="../../styles.css">
+    <link rel="stylesheet" href="../../blog.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../../index.html" class="nav-logo">DV</a>
+            <ul class="nav-menu">
+                <li><a href="../../index.html#about" class="nav-link">About</a></li>
+                <li><a href="../../cv.html" class="nav-link">CV</a></li>
+                <li><a href="../../blog.html" class="nav-link active">Blog</a></li>
+                <li><a href="../../index.html#contact" class="nav-link nav-cta">Contact</a></li>
+            </ul>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+                <span class="theme-toggle-icon">
+                    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </span>
+                <span class="theme-label-dark">Dark mode</span>
+                <span class="theme-label-light">Light mode</span>
+            </button>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Article Header -->
+    <header class="article-header">
+        <div class="container">
+            <a href="../../blog.html" class="article-back">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                Back to Blog
+            </a>
+            <div class="article-meta">
+                <span class="article-date">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                    February 24, 2026
+                </span>
+                <span class="article-reading-time">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    4 min read
+                </span>
+            </div>
+            <div class="article-tags">
+                <span class="article-tag">AI</span>
+<span class="article-tag">GitHub Copilot</span>
+<span class="article-tag">Development</span>
+<span class="article-tag">Agentic AI</span>
+<span class="article-tag">Legacy Code</span>
+            </div>
+            <h1 class="article-title">From Autocomplete to Agents: My Journey with GitHub Copilot</h1>
+        </div>
+    </header>
+
+    <!-- Article Content -->
+    <main class="article-content">
+        <div class="container">
+            <article class="article-body">
+                <h1 id="from-autocomplete-to-agents-my-journey-with-github-copilot">From Autocomplete to Agents: My Journey with GitHub Copilot</h1>
+<p>A couple of years ago, I started what I thought would be a simple experiment: building one application per week using only GitHub Copilot.</p>
+<p>At the time, Copilot acted mostly as an advanced autocomplete and coding assistant. Recently, I revisited that experiment using GitHub Copilot in its agentic form, and the difference was dramatic. What once felt like a helpful tool now behaves much closer to a collaborative system capable of reasoning about codebases, constraints, and intent.</p>
+<p>This post is a reflection on that journey and on why I believe agentic AI in software development is still widely underestimated.</p>
+<h2 id="the-early-days-of-github-copilot-as-an-ai-assistant">The Early Days of GitHub Copilot as an AI Assistant</h2>
+<p>When I first started experimenting with GitHub Copilot, the experience was already impressive. I was able to build functional applications while writing surprisingly little code myself. In many situations, my role shifted from writing implementation details to guiding the model through intent and corrections.</p>
+<p>However, the limitations were clear:</p>
+<ul>
+<li>The applications were simple and often incomplete  </li>
+<li>I frequently had to intervene to fix logic or structural issues  </li>
+<li>Architectural decisions still relied entirely on human judgment  </li>
+<li>Debugging required solid development experience  </li>
+</ul>
+<p>Copilot was powerful, but it was not autonomous. It worked well as an assistant, but it still needed a developer who understood why things were breaking and how to fix them. For an experienced developer, this was manageable. Still, it was clear that Copilot was not yet operating as a true teammate.</p>
+<h2 id="testing-github-copilot-agents-on-a-legacy-c-codebase">Testing GitHub Copilot Agents on a Legacy C++ Codebase</h2>
+<p>Recently, I decided to push things much further.</p>
+<p>Instead of starting a greenfield project, I took an application I had written more than fourteen years ago in C++ and Qt 4. It is a small physics‑based drawing game called <em>Funny Sketches</em>.</p>
+<p>Original project: <a href="https://sourceforge.net/projects/funnysketches/" rel="nofollow">https://sourceforge.net/projects/funnysketches/</a></p>
+<p>The codebase was old. The dependencies were outdated. The tooling belonged to a completely different era of software development. I asked GitHub Copilot agents to understand the project, identify what was broken, modernize it, and make it run again.</p>
+<p>What followed genuinely surprised me.</p>
+<h2 id="modernizing-legacy-code-with-github-copilot-agents">Modernizing Legacy Code with GitHub Copilot Agents</h2>
+<p>In roughly twenty minutes, the agents were able to:</p>
+<ul>
+<li>Navigate and understand a non‑trivial legacy C++ codebase  </li>
+<li>Identify outdated assumptions and dependencies  </li>
+<li>Reason about required updates and limitations  </li>
+<li>Apply the necessary changes to make the application run again  </li>
+</ul>
+<p>This is work that would realistically have taken days or even weeks, even for me as the original author with full historical context of the code.</p>
+<p>The updated project now lives here: <a href="https://github.com/vitaled/funny-sketches" rel="nofollow">https://github.com/vitaled/funny-sketches</a></p>
+<p>While I reviewed everything carefully, the level of autonomy and reasoning demonstrated by the agents was on a completely different scale compared to my experience just a year earlier.</p>
+<h2 id="why-github-copilot-agentic-ai-is-not-an-incremental-change">Why GitHub Copilot Agentic AI Is Not an Incremental Change</h2>
+<p>The transition from Copilot as an autocomplete tool to Copilot as an agent is not incremental. It is qualitative.</p>
+<p>This is no longer just about faster code generation. Agentic AI systems can now:</p>
+<ul>
+<li>Understand intent across large and old codebases  </li>
+<li>Reason about constraints and architectural boundaries  </li>
+<li>Perform multi‑step refactoring tasks  </li>
+<li>Operate with minimal direct supervision  </li>
+</ul>
+<p>That is why I believe these tools are still widely underestimated. The conversation should not focus only on productivity gains, but on how the nature of software development itself is changing.</p>
+<h2 id="will-ai-coding-agents-replace-developers">Will AI Coding Agents Replace Developers?</h2>
+<p>A common argument is that AI systems will never replace real developers. I partially agree, but I think the discussion is often framed incorrectly.</p>
+<p>These systems may not yet operate at the level of the top five percent of developers. But what about the remaining ninety‑five percent?</p>
+<p>Not all software is built to fly airplanes or run nuclear reactors. A significant portion of code exists to automate workflows, maintain legacy systems, build internal tools, and connect existing platforms. For much of this work, agentic AI systems are already good enough, and they are improving rapidly.</p>
+<p>The role of the developer does not disappear, but it changes. Writing code becomes less important than supervising, validating, and guiding intelligent systems.</p>
+<h2 id="the-real-cost-debate-around-ai-coding-tools">The Real Cost Debate Around AI Coding Tools</h2>
+<p>Another frequent objection concerns cost.</p>
+<p>Today, these tools can be expensive. However, the same was true for cloud computing, solid‑state storage, GPUs, and continuous integration systems when they first appeared. Technology tends to become cheaper through optimization, scale, and competition.</p>
+<p>Assuming this trend will suddenly stop with AI coding tools feels short‑sighted.</p>
+<h2 id="final-thoughts">Final Thoughts</h2>
+<p>After revisiting GitHub Copilot through its agentic capabilities, I am convinced we are witnessing a real shift in how software is built, maintained, and modernized.</p>
+<p>This is not hype and it is not marketing. It is a structural change in the software development lifecycle.</p>
+<p>If you are a developer and you are not experimenting with agentic AI tools yet, my advice is simple: start now. Even if you are skeptical, and especially if you are skeptical.</p>
+<p>GitHub Copilot agentic AI is not just accelerating development. It is redefining what it means to build, understand, and evolve software.</p>
+            </article>
+            
+            <footer class="article-footer">
+                <nav class="article-nav">
+                    
+                    
+                </nav>
+            </footer>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Daniele Vitale. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="../../script.js"></script>
+</body>
+</html>

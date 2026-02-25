@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countries I've Visited | Daniele Vitale</title>
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- amCharts 5 -->
+    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/map.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+    
+    <style>
+        :root {
+            --primary-color: #4ade80;
+            --primary-light: #86efac;
+            --primary-dark: #22c55e;
+            
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            
+            --bg-white: #ffffff;
+            --bg-light: #f9fafb;
+            
+            --border-color: #e5e7eb;
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            
+            --map-land: #e5e7eb;
+            --map-visited: #4ade80;
+            --map-hover: #22c55e;
+            --map-water: #f0f9ff;
+        }
+
+        [data-theme="dark"] {
+            --text-primary: #f3f4f6;
+            --text-secondary: #d1d5db;
+            
+            --bg-white: #111827;
+            --bg-light: #1f2937;
+            
+            --border-color: #374151;
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+            
+            --map-land: #374151;
+            --map-visited: #4ade80;
+            --map-hover: #86efac;
+            --map-water: #1f2937;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-white);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            padding: 24px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .count {
+            display: inline-block;
+            background: var(--primary-color);
+            color: #1f2937;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-top: 12px;
+        }
+
+        #chartdiv {
+            flex: 1;
+            width: 100%;
+            min-height: 500px;
+            background: var(--map-water);
+        }
+
+        .legend {
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+            border-top: 1px solid var(--border-color);
+            background: var(--bg-light);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+        }
+
+        .legend-visited {
+            background: var(--map-visited);
+        }
+
+        .legend-not-visited {
+            background: var(--map-land);
+        }
+
+        .countries-list {
+            padding: 24px;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .countries-list h2 {
+            font-size: 1.25rem;
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .country-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .country-tag {
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+        }
+
+        .country-tag:hover {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: #1f2937;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-lg);
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.05);
+        }
+
+        .icon-sun, .icon-moon {
+            color: var(--text-primary);
+        }
+
+        [data-theme="dark"] .icon-sun {
+            display: none;
+        }
+
+        .icon-moon {
+            display: none;
+        }
+
+        [data-theme="dark"] .icon-moon {
+            display: block;
+        }
+
+        footer {
+            padding: 16px;
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-color);
+        }
+
+        footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            #chartdiv {
+                min-height: 350px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </button>
+
+    <header>
+        <h1>Countries I've Visited</h1>
+        <p class="subtitle">Exploring the world, one country at a time</p>
+        <span class="count">11 countries</span>
+    </header>
+
+    <div id="chartdiv"></div>
+
+    <div class="legend">
+        <div class="legend-item">
+            <div class="legend-color legend-visited"></div>
+            <span>Visited</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color legend-not-visited"></div>
+            <span>Not yet visited</span>
+        </div>
+    </div>
+
+    <div class="countries-list">
+        <h2>Countries Visited</h2>
+        <div class="country-tags">
+            <span class="country-tag">🇮🇹 Italy</span>
+            <span class="country-tag">🇫🇷 France</span>
+            <span class="country-tag">🇩🇪 Germany</span>
+            <span class="country-tag">🇪🇸 Spain</span>
+            <span class="country-tag">🇷🇸 Serbia</span>
+            <span class="country-tag">🇨🇭 Switzerland</span>
+            <span class="country-tag">🇯🇵 Japan</span>
+            <span class="country-tag">🇺🇸 United States</span>
+            <span class="country-tag">🇬🇧 United Kingdom</span>
+            <span class="country-tag">🇨🇿 Czech Republic</span>
+            <span class="country-tag">🇳🇱 Netherlands</span>
+        </div>
+    </div>
+
+    <footer>
+        Map powered by <a href="https://www.amcharts.com/" target="_blank" rel="noopener">amCharts</a>
+    </footer>
+
+    <script>
+        // Theme toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            // Update map colors
+            updateMapColors();
+        });
+
+        // Visited countries (ISO 3166-1 alpha-2 codes)
+        const visitedCountries = ['IT', 'FR', 'DE', 'ES', 'RS', 'CH', 'JP', 'US', 'GB', 'CZ', 'NL'];
+
+        let root, chart, polygonSeries;
+
+        // Initialize map
+        am5.ready(function() {
+            root = am5.Root.new("chartdiv");
+            root.setThemes([am5themes_Animated.new(root)]);
+
+            chart = root.container.children.push(
+                am5map.MapChart.new(root, {
+                    panX: "rotateX",
+                    panY: "translateY",
+                    projection: am5map.geoNaturalEarth1(),
+                    homeZoomLevel: 1,
+                    homeGeoPoint: { longitude: 10, latitude: 30 }
+                })
+            );
+
+            // Create polygon series
+            polygonSeries = chart.series.push(
+                am5map.MapPolygonSeries.new(root, {
+                    geoJSON: am5geodata_worldLow,
+                    exclude: ["AQ"]
+                })
+            );
+
+            polygonSeries.mapPolygons.template.setAll({
+                tooltipText: "{name}",
+                interactive: true,
+                strokeWidth: 0.5
+            });
+
+            polygonSeries.mapPolygons.template.states.create("hover", {
+                fillOpacity: 0.8
+            });
+
+            // Apply initial colors
+            updateMapColors();
+
+            // Add zoom control
+            chart.set("zoomControl", am5map.ZoomControl.new(root, {}));
+
+            // Animate on load
+            chart.appear(1000, 100);
+        });
+
+        function updateMapColors() {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            
+            const landColor = isDark ? am5.color(0x374151) : am5.color(0xe5e7eb);
+            const visitedColor = am5.color(0x4ade80);
+            const hoverColor = isDark ? am5.color(0x86efac) : am5.color(0x22c55e);
+            const waterColor = isDark ? am5.color(0x1f2937) : am5.color(0xf0f9ff);
+            const strokeColor = isDark ? am5.color(0x1f2937) : am5.color(0xffffff);
+
+            if (chart) {
+                chart.set("background", am5.Rectangle.new(root, {
+                    fill: waterColor
+                }));
+            }
+
+            if (polygonSeries) {
+                polygonSeries.mapPolygons.template.setAll({
+                    fill: landColor,
+                    stroke: strokeColor
+                });
+
+                polygonSeries.mapPolygons.template.states.create("hover", {
+                    fill: hoverColor
+                });
+
+                // Color visited countries
+                polygonSeries.mapPolygons.each(function(polygon) {
+                    const dataContext = polygon.dataItem.dataContext;
+                    if (visitedCountries.includes(dataContext.id)) {
+                        polygon.set("fill", visitedColor);
+                    } else {
+                        polygon.set("fill", landColor);
+                    }
+                });
+            }
+        }
+
+        // Re-apply colors after data is loaded
+        if (typeof am5 !== 'undefined') {
+            am5.ready(function() {
+                setTimeout(function() {
+                    if (polygonSeries) {
+                        polygonSeries.events.on("datavalidated", function() {
+                            updateMapColors();
+                        });
+                    }
+                }, 100);
+            });
+        }
+    </script>
+</body>
+</html>
